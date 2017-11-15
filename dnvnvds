@@ -1,0 +1,196 @@
+[33mcommit b98f033a5c23efe97e87e2e3d1387d9f41408038[m
+Author: Larry <larry10hhobh@gmail.com>
+Date:   Wed Nov 15 20:06:04 2017 +0800
+
+    First commit.
+
+[1mdiff --git a/.idea/vcs.xml b/.idea/vcs.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..94a25f7[m
+[1m--- /dev/null[m
+[1m+++ b/.idea/vcs.xml[m
+[36m@@ -0,0 +1,6 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="UTF-8"?>[m
+[32m+[m[32m<project version="4">[m
+[32m+[m[32m  <component name="VcsDirectoryMappings">[m
+[32m+[m[32m    <mapping directory="$PROJECT_DIR$" vcs="Git" />[m
+[32m+[m[32m  </component>[m
+[32m+[m[32m</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/app/src/main/java/com/example/providertest/MainActivity.java b/app/src/main/java/com/example/providertest/MainActivity.java[m
+[1mindex f90a3b5..e629b7e 100644[m
+[1m--- a/app/src/main/java/com/example/providertest/MainActivity.java[m
+[1m+++ b/app/src/main/java/com/example/providertest/MainActivity.java[m
+[36m@@ -1,86 +1,86 @@[m
+[31m-package com.example.providertest;[m
+[31m-[m
+[31m-import android.content.ContentValues;[m
+[31m-import android.database.Cursor;[m
+[31m-import android.net.Uri;[m
+[31m-import android.support.v7.app.AppCompatActivity;[m
+[31m-import android.os.Bundle;[m
+[31m-import android.util.Log;[m
+[31m-import android.view.View;[m
+[31m-import android.widget.Button;[m
+[31m-[m
+[31m-public class MainActivity extends AppCompatActivity {[m
+[31m-[m
+[31m-    private String newId;[m
+[31m-[m
+[31m-    @Override[m
+[31m-    protected void onCreate(Bundle savedInstanceState) {[m
+[31m-        super.onCreate(savedInstanceState);[m
+[31m-        setContentView(R.layout.activity_main);[m
+[31m-[m
+[31m-        Button addData = (Button) findViewById(R.id.add_data);[m
+[31m-        addData.setOnClickListener(new View.OnClickListener() {[m
+[31m-            @Override[m
+[31m-            public void onClick(View view) {[m
+[31m-                // 添加数据[m
+[31m-                Uri uri = Uri.parse("content://com.example.databasetest.provider/book");[m
+[31m-                ContentValues values = new ContentValues();[m
+[31m-                values.put("name", "名侦探柯南");[m
+[31m-                values.put("author", "青山");[m
+[31m-                values.put("pages", 9980);[m
+[31m-                values.put("price", 589.9);[m
+[31m-                Uri newUri = getContentResolver().insert(uri, values);[m
+[31m-                newId = newUri.getPathSegments().get(1);[m
+[31m-            }[m
+[31m-        });[m
+[31m-[m
+[31m-        Button queryData = (Button) findViewById(R.id.query_data);[m
+[31m-        queryData.setOnClickListener(new View.OnClickListener() {[m
+[31m-            @Override[m
+[31m-            public void onClick(View view) {[m
+[31m-                // 查询数据[m
+[31m-                Uri uri = Uri.parse("content://com.example.databasetest.provider/book");[m
+[31m-                Cursor cursor = getContentResolver().query(uri, null,[m
+[31m-                        null, null, null);[m
+[31m-                if (cursor != null) {[m
+[31m-                    while (cursor.moveToNext()) {[m
+[31m-                        String name = cursor.getString(cursor.getColumnIndex("name"));[m
+[31m-                        String author = cursor.getString(cursor.getColumnIndex("author"));[m
+[31m-                        int pages = cursor.getInt(cursor.getColumnIndex("pages"));[m
+[31m-                        double price = cursor.getDouble(cursor.getColumnIndex("price"));[m
+[31m-                        Log.d("MainActvity", "book name is " + name);[m
+[31m-                        Log.d("MainActvity", "book name is " + author);[m
+[31m-                        Log.d("MainActvity", "book pages is " + pages);[m
+[31m-                        Log.d("MainActvity", "book price is " + price);[m
+[31m-                    }[m
+[31m-                    cursor.close();[m
+[31m-                }[m
+[31m-            }[m
+[31m-        });[m
+[31m-[m
+[31m-        Button updataData = (Button) findViewById(R.id.update_data);[m
+[31m-        updataData.setOnClickListener(new View.OnClickListener() {[m
+[31m-            @Override[m
+[31m-            public void onClick(View view) {[m
+[31m-                // 更新数据[m
+[31m-                Uri uri = Uri.parse("content://com.example.databasetest.provider/book/"+newId);[m
+[31m-                ContentValues values = new ContentValues();[m
+[31m-                values.put("name","海贼王");[m
+[31m-                values.put("author","尾田");[m
+[31m-                values.put("pages",1000);[m
+[31m-                values.put("price",666.6);[m
+[31m-                getContentResolver().update(uri,values,null,null);[m
+[31m-            }[m
+[31m-        });[m
+[31m-[m
+[31m-        Button deleteData = (Button) findViewById(R.id.delete_data);[m
+[31m-        deleteData.setOnClickListener(new View.OnClickListener() {[m
+[31m-            @Override[m
+[31m-            public void onClick(View view) {[m
+[31m-                // 删除数据[m
+[31m-                Uri uri  = Uri.parse("content://com.example.databasetest.provider/book/"+newId);[m
+[31m-                getContentResolver().delete(uri,null,null);[m
+[31m-            }[m
+[31m-        });[m
+[31m-    }[m
+[31m-}[m
+[32m+[m[32mpackage com.example.providertest;[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mimport android.content.ContentValues;[m[41m[m
+[32m+[m[32mimport android.database.Cursor;[m[41m[m
+[32m+[m[32mimport android.net.Uri;[m[41m[m
+[32m+[m[32mimport android.support.v7.app.AppCompatActivity;[m[41m[m
+[32m+[m[32mimport android.os.Bundle;[m[41m[m
+[32m+[m[32mimport android.util.Log;[m[41m[m
+[32m+[m[32mimport android.view.View;[m[41m[m
+[32m+[m[32mimport android.widget.Button;[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mpublic class MainActivity extends AppCompatActivity {[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    private String newId;[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    @Override[m[41m[m
+[32m+[m[32m    protected void onCreate(Bundle savedInstanceState) {[m[41m[m
+[32m+[m[32m        super.onCreate(savedInstanceState);[m[41m[m
+[32m+[m[32m        setContentView(R.layout.activity_main);[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        Button addData = (Button) findViewById(R.id.add_data);[m[41m[m
+[32m+[m[32m        addData.setOnClickListener(new View.OnClickListener() {[m[41m[m
+[32m+[m[32m            @Override[m[41m[m
+[32m+[m[32m            public void onClick(View view) {[m[41m[m
+[32m+[m[32m                // 添加数据[m[41m[m
+[32m+[m[32m                Uri uri = Uri.parse("content://com.example.databasetest.provider/book");[m[41m[m
+[32m+[m[32m                ContentValues values = new ContentValues();[m[41m[m
+[32m+[m[32m                values.put("name", "名侦探柯南");[m[41m[m
+[32m+[m[32m                values.put("author", "青山");[m[41m[m
+[32m+[m[32m                values.put("pages", 9980);[m[41m[m
+[32m+[m[32m                values.put("price", 599.9);[m[41m[m
+[32m+[m[32m                Uri newUri = getContentResolver().insert(uri, values);[m[41m[m
+[32m+[m[32m                newId = newUri.getPathSegments().get(1);[m[41m[m
+[32m+[m[32m            }[m[41m[m
+[32m+[m[32m        });[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        Button queryData = (Button) findViewById(R.id.query_data);[m[41m[m
+[32m+[m[32m        queryData.setOnClickListener(new View.OnClickListener() {[m[41m[m
+[32m+[m[32m            @Override[m[41m[m
+[32m+[m[32m            public void onClick(View view) {[m[41m[m
+[32m+[m[32m                // 查询数据[m[41m[m
+[32m+[m[32m                Uri uri = Uri.parse("content://com.example.databasetest.provider/book");[m[41m[m
+[32m+[m[32m                Cursor cursor = getContentResolver().query(uri, null,[m[41m[m
+[32m+[m[32m                        null, null, null);[m[41m[m
+[32m+[m[32m                if (cursor != null) {[m[41m[m
+[32m+[m[32m                    while (cursor.moveToNext()) {[m[41m[m
+[32m+[m[32m                        String name = cursor.getString(cursor.getColumnIndex("name"));[m[41m[m
+[32m+[m[32m                        String author = cursor.getString(cursor.getColumnIndex("author"));[m[41m[m
+[32m+[m[32m                        int pages = cursor.getInt(cursor.getColumnIndex("pages"));[m[41m[m
+[32m+[m[32m                        double price = cursor.getDouble(cursor.getColumnIndex("price"));[m[41m[m
+[32m+[m[32m                        Log.d("MainActvity", "book name is " + name);[m[41m[m
+[32m+[m[32m                        Log.d("MainActvity", "book name is " + author);[m[41m[m
+[32m+[m[32m                        Log.d("MainActvity", "book pages is " + pages);[m[41m[m
+[32m+[m[32m                        Log.d("MainActvity", "book price is " + price);[m[41m[m
+[32m+[m[32m                    }[m[41m[m
+[32m+[m[32m                    cursor.close();[m[41m[m
+[32m+[m[32m                }[m[41m[m
+[32m+[m[32m            }[m[41m[m
+[32m+[m[32m        });[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        Button updataData = (Button) findViewById(R.id.update_data);[m[41m[m
+[32m+[m[32m        updataData.setOnClickListener(new View.OnClickListener() {[m[41m[m
+[32m+[m[32m            @Override[m[41m[m
+[32m+[m[32m            public void onClick(View view) {[m[41m[m
+[32m+[m[32m                // 更新数据[m[41m[m
+[32m+[m[32m                Uri uri = Uri.parse("content://com.example.databasetest.provider/book/"+newId);[m[41m[m
+[32m+[m[32m                ContentValues values = new ContentValues();[m[41m[m
+[32m+[m[32m                values.put("name","海贼王");[m[41m[m
+[32m+[m[32m                values.put("author","尾田");[m[41m[m
+[32m+[m[32m                values.put("pages",1000);[m[41m[m
+[32m+[m[32m                values.put("price",666.6);[m[41m[m
+[32m+[m[32m                getContentResolver().update(uri,values,null,null);[m[41m[m
+[32m+[m[32m            }[m[41m[m
+[32m+[m[32m        });[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        Button deleteData = (Button) findViewById(R.id.delete_data);[m[41m[m
+[32m+[m[32m        deleteData.setOnClickListener(new View.OnClickListener() {[m[41m[m
+[32m+[m[32m            @Override[m[41m[m
+[32m+[m[32m            public void onClick(View view) {[m[41m[m
+[32m+[m[32m                // 删除数据[m[41m[m
+[32m+[m[32m                Uri uri  = Uri.parse("content://com.example.databasetest.provider/book/"+newId);[m[41m[m
+[32m+[m[32m                getContentResolver().delete(uri,null,null);[m[41m[m
+[32m+[m[32m            }[m[41m[m
+[32m+[m[32m        });[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[32m}[m[41m[m
